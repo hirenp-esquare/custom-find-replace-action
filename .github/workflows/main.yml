@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: hirenp-waferwire/custom-find-replace-action
+        uses: hirenp-waferwire/custom-find-replace-action@main
         with:
           who-to-greet: 'Test the Data'
       # Use the output from the `hello` step
