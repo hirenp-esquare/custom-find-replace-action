@@ -26,7 +26,6 @@ function findAndReplace(path, FindReplaceParse) {
         if (modifiedCount == totalFiles) {
           resolve(modifiedCount);
         }
-        //console.log(modifiedCount);
       });
     });
 
@@ -43,7 +42,7 @@ try {
     if (err) {
       console.log('Error', err);
     } else {
-      //console.log(res);
+      console.log(res);
       for (let index = 0; index < res.length; index++) {
         const path = res[index]
         var stats = fs.statSync(path);
