@@ -4,7 +4,7 @@ const glob = require("glob");
 const fs = require('fs');
 
 
-const modifiedCount = 0;
+var modifiedCount = 0;
 var getDirectories = function (src, callback) {
   glob(src, callback);
 };
