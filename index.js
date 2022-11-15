@@ -24,7 +24,7 @@ try {
 
   const globPath = core.getInput('GlobPath');
   const FindReplace = core.getInput('FindReplace');
-  const p = JSON.parse(FindReplace);
+  //const p = JSON.parse(FindReplace);
   console.log(`Hello ${FindReplace}!`);
   getDirectories(globPath, function (err, res) {
     if (err) {
