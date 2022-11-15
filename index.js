@@ -28,7 +28,7 @@ try {
   const p1 = JSON.parse(p);;
   const p2 = p1.length;
 
-  for (let index = 0; index < p1.length; index++) {
+  for (let index = 0; index < FindReplace.length; index++) {
     const element = p1[index];
     console.log(`Hello ${element}!`);
 
