@@ -21,10 +21,12 @@ function findAndReplace(path) {
 }
 
 try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  getDirectories('**', function (err, res) {
+
+  const globPath = core.getInput('GlobPath');
+  const FindReplace = core.getInput('FindReplace');
+  const p = JSON.parse(FindReplace);
+  console.log(`Hello ${p}!`);
+  getDirectories(globPath, function (err, res) {
     if (err) {
       console.log('Error', err);
     } else {

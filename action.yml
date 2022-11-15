@@ -1,13 +1,18 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Find and Replace'
+description: 'Find and replace a string in project files'
+author: "Hiren Patel"
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  GlobPath:  # id of input
+    description: 'A glob of files to include in our find and replace'
     required: true
-    default: 'World'
+    default: '**'
+  FindReplace:  # id of input
+    description: 'A find and replace strings'
+    required: true
+    default: '[{"find":"hello",replace:"world"},{"find":"Data",replace:"Data1"}]'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  modifiedFiles: # id of output
+    description: 'The number of files which have been modified'
 runs:
   using: 'node16'
   main: 'index.js'
