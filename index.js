@@ -5,11 +5,13 @@ const fs = require('fs');
 
 
 var modifiedCount = 0;
+var totalFiles = 0;
 var getDirectories = function (src, callback) {
   glob(src, callback);
 };
 
 function findAndReplace(path, FindReplaceParse) {
+  var d1 = $.Deferred();
   fs.readFile(path, 'utf8', function (err, data) {
     if (err) throw err;
     let newContents = data;
@@ -20,10 +22,14 @@ function findAndReplace(path, FindReplaceParse) {
     fs.writeFile(path, newContents, function (err) {
       if (err) throw err;
       ++modifiedCount;
-      console.log(++modifiedCount);
+      if (modifiedCount == totalFiles) {
+        d1.resolve(modifiedCount)
+      }
+      //console.log(modifiedCount);
     });
-
   });
+
+  return d1;
 }
 
 try {
@@ -39,11 +45,17 @@ try {
       //console.log(res);
       for (let index = 0; index < res.length; index++) {
         const path = res[index]
-        findAndReplace(path, FindReplaceParse)
+        var stats = fs.statSync(path);
+        if (stats.isFile()) {
+          ++totalFiles;
+          findAndReplace(path, FindReplaceParse).then(function (modifiedCountRes) {
+            core.setOutput("modifiedFiles", modifiedCountRes);
+          })
+        }
       }
     }
   });
-   core.setOutput("modifiedFiles", modifiedCount);
+
 } catch (error) {
   core.setFailed(error.message);
 }
