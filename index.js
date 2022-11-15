@@ -5,7 +5,7 @@ const fs = require('fs');
 
 
 var getDirectories = function (src, callback) {
-  glob(src + '/**/*.md', callback);
+  glob(src, callback);
 };
 
 function findAndReplace(path) {
@@ -24,7 +24,7 @@ try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
   console.log(`Hello ${nameToGreet}!`);
-  getDirectories('.', function (err, res) {
+  getDirectories('**/*.md', function (err, res) {
     if (err) {
       console.log('Error', err);
     } else {
