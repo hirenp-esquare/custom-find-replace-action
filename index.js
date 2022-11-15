@@ -8,15 +8,24 @@ var getDirectories = function (src, callback) {
   glob(src, callback);
 };
 
-function findAndReplace(path) {
+function findAndReplace(path, FindReplaceParse) {
   fs.readFile(path, 'utf8', function (err, data) {
     if (err) throw err;
     //Do your processing, MD5, send a satellite to the moon, etc.
-    let newContents = data.replace(/DEV/ig, 'World');
-    fs.writeFile(path, newContents, function (err) {
-      if (err) throw err;
-      console.log('complete');
-    });
+    let newContents = data;
+    for (let index = 0; index < FindReplaceParse.length; index++) {
+      const item = FindReplaceParse[index];
+      var find = "/"+item.find+"/ig";
+      newContents = newContents.replace(find, item.replace);
+
+    }
+    console.log(newContents)
+
+    // fs.writeFile(path, newContents, function (err) {
+    //   if (err) throw err;
+    //   console.log('complete');
+    // });
+
   });
 }
 
@@ -24,7 +33,7 @@ try {
 
   const globPath = core.getInput('GlobPath');
   const FindReplace = core.getInput('FindReplace');
-  const p = JSON.parse(FindReplace);;
+  const FindReplaceParse = JSON.parse(FindReplace);;
 
 
   for (let index = 0; index < p.length; index++) {
@@ -33,7 +42,7 @@ try {
 
   }
 
-  //console.log(`Hello ${p2}!`);
+
   getDirectories(globPath, function (err, res) {
     if (err) {
       console.log('Error', err);
@@ -41,10 +50,10 @@ try {
       //res.push("data");
       console.log(res);
 
-      // for (let index = 0; index < res.length; index++) {
-      //   const path = res[index]
-      //   findAndReplace(path)
-      // }
+      for (let index = 0; index < res.length; index++) {
+        const path = res[index]
+        findAndReplace(path, FindReplaceParse)
+      }
     }
   });
   //const time = (new Date()).toTimeString();
