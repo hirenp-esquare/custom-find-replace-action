@@ -10,26 +10,27 @@ var getDirectories = function (src, callback) {
   glob(src, callback);
 };
 
-function findAndReplace(path, FindReplaceParse) {
-  var d1 = $.Deferred();
-  fs.readFile(path, 'utf8', function (err, data) {
-    if (err) throw err;
-    let newContents = data;
-    for (let index = 0; index < FindReplaceParse.length; index++) {
-      const item = FindReplaceParse[index];
-      newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
-    }
-    fs.writeFile(path, newContents, function (err) {
-      if (err) throw err;
-      ++modifiedCount;
-      if (modifiedCount == totalFiles) {
-        d1.resolve(modifiedCount)
-      }
-      //console.log(modifiedCount);
-    });
-  });
 
-  return d1;
+function findAndReplace(path, FindReplaceParse) {
+  return new Promise(function (resolve, reject) {
+    fs.readFile(path, 'utf8', function (err, data) {
+      if (err) throw err;
+      let newContents = data;
+      for (let index = 0; index < FindReplaceParse.length; index++) {
+        const item = FindReplaceParse[index];
+        newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
+      }
+      fs.writeFile(path, newContents, function (err) {
+        if (err) throw err;
+        ++modifiedCount;
+        if (modifiedCount == totalFiles) {
+          resolve(modifiedCount);
+        }
+        //console.log(modifiedCount);
+      });
+    });
+
+  });
 }
 
 try {
