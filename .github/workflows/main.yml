@@ -13,7 +13,7 @@ jobs:
         uses: hirenp-waferwire/custom-find-replace-action@main
         with:
           GlobPath: 'Data/**/*.md'
-          FindReplace: '[{"find": "hello", replace: "world" }, {"find": "Dev", replace: "Tester"}]'
+          FindReplace: '[{"find": "hello", "replace": "world" }, {"find": "Dev", "replace": "Tester"}]'
       # Use the output from the `selftest` step
       - name: Get the output time
         run: echo "The time was ${{ steps.selftest.outputs.modifiedFiles }}"

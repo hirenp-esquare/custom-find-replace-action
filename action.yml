@@ -9,7 +9,7 @@ inputs:
   FindReplace:  # id of input
     description: 'A find and replace strings'
     required: true
-    default: '[{"find":"hello",replace:"world"},{"find":"Data",replace:"Data1"}]'
+    default: '[{ "find":"hello", "replace": "world" }, { "find":"Data", "replace": "Data1" }]'
 outputs:
   modifiedFiles: # id of output
     description: 'The number of files which have been modified'
