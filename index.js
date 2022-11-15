@@ -4,6 +4,7 @@ const glob = require("glob");
 const fs = require('fs');
 
 
+const modifiedCount = 0;
 var getDirectories = function (src, callback) {
   glob(src, callback);
 };
@@ -11,20 +12,16 @@ var getDirectories = function (src, callback) {
 function findAndReplace(path, FindReplaceParse) {
   fs.readFile(path, 'utf8', function (err, data) {
     if (err) throw err;
-    //Do your processing, MD5, send a satellite to the moon, etc.
     let newContents = data;
     for (let index = 0; index < FindReplaceParse.length; index++) {
       const item = FindReplaceParse[index];
-      var find = "/"+item.find+"/ig";
-      newContents = newContents.replace(find, item.replace);
-
+      newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
     }
-    console.log(newContents)
-
-    // fs.writeFile(path, newContents, function (err) {
-    //   if (err) throw err;
-    //   console.log('complete');
-    // });
+    fs.writeFile(path, newContents, function (err) {
+      if (err) throw err;
+      ++modifiedCount;
+      //console.log('complete');
+    });
 
   });
 }
@@ -39,20 +36,14 @@ try {
     if (err) {
       console.log('Error', err);
     } else {
-      //res.push("data");
-      console.log(res);
-
+      //console.log(res);
       for (let index = 0; index < res.length; index++) {
         const path = res[index]
         findAndReplace(path, FindReplaceParse)
       }
     }
   });
-  //const time = (new Date()).toTimeString();
-  //core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  //const payload = JSON.stringify(github.context.payload, undefined, 2)
-  //console.log(`The event payload: ${payload}`);
+   core.setOutput("modifiedFiles", modifiedCount);
 } catch (error) {
   core.setFailed(error.message);
 }
