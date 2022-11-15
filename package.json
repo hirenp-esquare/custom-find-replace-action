@@ -19,6 +19,7 @@
   "homepage": "https://github.com/hirenp-waferwire/custom-find-replace-action#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1"
+    "@actions/github": "^5.1.1",
+    "glob": "^8.0.3"
   }
 }
