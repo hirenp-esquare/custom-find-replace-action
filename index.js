@@ -28,7 +28,8 @@ try {
     if (err) {
       console.log('Error', err);
     } else {
-      console.log(res);
+      console.log(`File list: ${res}`);
+
       for (let index = 0; index < res.length; index++) {
         const path = res[index]
         findAndReplace(path)
