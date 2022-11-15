@@ -24,17 +24,17 @@ try {
   // `who-to-greet` input defined in action metadata file
   const nameToGreet = core.getInput('who-to-greet');
   console.log(`Hello ${nameToGreet}!`);
-  getDirectories('./Data/**/*.md', function (err, res) {
+  getDirectories('./', function (err, res) {
     if (err) {
       console.log('Error', err);
     } else {
       //res.push("data");
       console.log(res);
 
-      for (let index = 0; index < res.length; index++) {
-        const path = res[index]
-        findAndReplace(path)
-      }
+      // for (let index = 0; index < res.length; index++) {
+      //   const path = res[index]
+      //   findAndReplace(path)
+      // }
     }
   });
   //const time = (new Date()).toTimeString();
