@@ -28,7 +28,13 @@ try {
   const p1 = JSON.parse(p);;
   const p2 = p1.length;
 
-  console.log(`Hello ${p2}!`);
+  for (let index = 0; index < p1.length; index++) {
+    const element = p1[index];
+    console.log(`Hello ${element}!`);
+
+  }
+
+  //console.log(`Hello ${p2}!`);
   getDirectories(globPath, function (err, res) {
     if (err) {
       console.log('Error', err);
