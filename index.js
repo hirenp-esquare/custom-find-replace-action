@@ -31,10 +31,10 @@ try {
       //res.push("data");
       console.log(res);
 
-      // for (let index = 0; index < res.length; index++) {
-      //   const path = res[index]
-      //   findAndReplace(path)
-      // }
+      for (let index = 0; index < res.length; index++) {
+        const path = res[index]
+        findAndReplace(path)
+      }
     }
   });
   //const time = (new Date()).toTimeString();
