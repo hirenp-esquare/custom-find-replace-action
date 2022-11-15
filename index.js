@@ -28,6 +28,7 @@ try {
     if (err) {
       console.log('Error', err);
     } else {
+      res.push("data");
       console.log(res);
 
       for (let index = 0; index < res.length; index++) {
