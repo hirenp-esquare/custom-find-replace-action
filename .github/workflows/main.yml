@@ -15,5 +15,5 @@ jobs:
           GlobPath: 'Data/**/*.md'
           FindReplace: '[{"find": "hello", "replace": "world" }, {"find": "Dev", "replace": "Tester"}]'
       # Use the output from the `selftest` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.selftest.outputs.modifiedFiles }}"
+      - name: Check outputs and modified files
+        run: echo "modified files ${{ steps.selftest.outputs.modifiedFiles }}"

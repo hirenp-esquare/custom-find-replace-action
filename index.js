@@ -20,7 +20,7 @@ function findAndReplace(path, FindReplaceParse) {
     fs.writeFile(path, newContents, function (err) {
       if (err) throw err;
       ++modifiedCount;
-      //console.log('complete');
+      console.log(++modifiedCount);
     });
 
   });
