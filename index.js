@@ -23,7 +23,7 @@ function findAndReplace(path, FindReplaceParse) {
         const item = FindReplaceParse[index];
         newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
       }
-      if (newContents =! data) {
+      if (newContents != data) {
         fs.writeFileSync(path, newContents, function (err) {
           if (err) {
             //resolve(modifiedCount);
