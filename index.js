@@ -12,10 +12,10 @@ var getDirectories = function (src, callback) {
 
 
 function findAndReplace(path, FindReplaceParse) {
-  return new Promise(function (resolve, reject) {
-    fs.readFile(path, 'utf8', function (err, data) {
+  //return new Promise(function (resolve, reject) {
+    fs.readFileSync(path, 'utf8', function (err, data) {
       if (err) {
-        resolve(modifiedCount);
+        //resolve(modifiedCount);
         throw err;
       }
       let newContents = data;
@@ -23,18 +23,21 @@ function findAndReplace(path, FindReplaceParse) {
         const item = FindReplaceParse[index];
         newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
       }
-      fs.writeFile(path, newContents, function (err) {
-        if (err) {
-          resolve(modifiedCount);
-          throw err;
-        }
-        if (++modifiedCount == totalFiles) {
-          resolve(modifiedCount);
-        }
-      });
+      if (newContents =! data) {
+        fs.writeFileSync(path, newContents, function (err) {
+          if (err) {
+            //resolve(modifiedCount);
+            throw err;
+          }
+          ++modifiedCount
+            //resolve();
+
+        });
+      }
+
     });
 
-  });
+  //});
 }
 
 try {
@@ -54,9 +57,11 @@ try {
           var stats = fs.statSync(path);
           if (stats.isFile()) {
             ++totalFiles;
-            findAndReplace(path, FindReplaceParse).then(function (modifiedCountRes) {
+            /*findAndReplace(path, FindReplaceParse).then(function (modifiedCountRes) {
               core.setOutput("modifiedFiles", modifiedCountRes);
-            })
+            })*/
+            findAndReplace(path, FindReplaceParse);
+            core.setOutput("modifiedFiles", modifiedCountRes);
           }
         }
       } else {
