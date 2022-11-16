@@ -61,11 +61,11 @@ try {
               core.setOutput("modifiedFiles", modifiedCountRes);
             })*/
             findAndReplace(path, FindReplaceParse);
-            core.setOutput("modifiedFiles", modifiedCountRes);
+            core.setOutput("modifiedFiles", modifiedCount);
           }
         }
       } else {
-        core.setOutput("modifiedFiles", modifiedCountRes);
+        core.setOutput("modifiedFiles", modifiedCount);
       }
     }
   });
