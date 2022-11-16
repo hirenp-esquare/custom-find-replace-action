@@ -5,39 +5,22 @@ const fs = require('fs');
 
 
 var modifiedCount = 0;
-var totalFiles = 0;
 var getDirectories = function (src, callback) {
   glob(src, callback);
 };
 
 
 function findAndReplace(path, FindReplaceParse) {
-  //return new Promise(function (resolve, reject) {
-    fs.readFileSync(path, 'utf8', function (err, data) {
-      if (err) {
-        //resolve(modifiedCount);
-        throw err;
-      }
-      let newContents = data;
-      for (let index = 0; index < FindReplaceParse.length; index++) {
-        const item = FindReplaceParse[index];
-        newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
-      }
-      if (newContents != data) {
-        fs.writeFileSync(path, newContents, function (err) {
-          if (err) {
-            //resolve(modifiedCount);
-            throw err;
-          }
-          ++modifiedCount
-            //resolve();
-
-        });
-      }
-
-    });
-
-  //});
+  var data = fs.readFileSync(path, 'utf8');
+  let newContents = data.slice();
+  for (let index = 0; index < FindReplaceParse.length; index++) {
+    const item = FindReplaceParse[index];
+    newContents = newContents.replace(new RegExp(`${item.find}`, 'gi'), item.replace);
+  }
+  if (data != newContents) {
+    fs.writeFileSync(path, newContents);
+    ++modifiedCount
+  }
 }
 
 try {
@@ -56,14 +39,10 @@ try {
           const path = res[index]
           var stats = fs.statSync(path);
           if (stats.isFile()) {
-            ++totalFiles;
-            /*findAndReplace(path, FindReplaceParse).then(function (modifiedCountRes) {
-              core.setOutput("modifiedFiles", modifiedCountRes);
-            })*/
             findAndReplace(path, FindReplaceParse);
-            core.setOutput("modifiedFiles", modifiedCount);
           }
         }
+        core.setOutput("modifiedFiles", modifiedCount);
       } else {
         core.setOutput("modifiedFiles", modifiedCount);
       }
